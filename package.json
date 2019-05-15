@@ -1,0 +1,29 @@
+{
+  "name": "market-mobil",
+  "version": "1.0.0",
+  "description": "api for ecomerce web",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server/index.js --exec babel-node"
+  },
+  "keywords": [],
+  "author": "Alfredo Rodriguez",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "nodemon": "^1.19.0"
+  },
+  "dependencies": {
+    "@babel/node": "^7.2.2",
+    "bcrypt": "^3.0.6",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.6"
+  }
+}
