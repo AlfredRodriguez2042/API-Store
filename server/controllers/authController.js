@@ -15,7 +15,7 @@ async function login(req, res){
         // Check it the password is correct
         const match = await bcrypt.compare(password,user.password)
         if(match){
-            // Access 
+            // Access and generete token
             const payload = {
                 username: user.username,
                 email: user.email,

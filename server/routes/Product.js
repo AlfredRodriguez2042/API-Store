@@ -16,26 +16,10 @@ router.post('/', controller.Create)
 router.get('/:key/:value',controller.Helper,controller.Show)
 
  //Update Products
-router.put('/:key/:value',helper,(req,res)=>{
-     if(req.body.err) res.status(500).send({err})
-     if(!req.body.product) res.status(404).send({message: 'not found'})
-    let products = req.body.product[0]
-     products = Object.assign(products, req.body)
-    products.save()
-     .then(products=> res.status(200).send({message: 'Update', products}))
-     .catch(err=>res.status(500).send({err}))
-
- })
+router.put('/:key/:value',controller.Helper,controller.Update)
 
  // Delete Products
-router.delete('/:key/:value',helper,(req,res)=>{
-    if(req.body.err) res.status(500).send({err})
-    if(!req.body.product) res.status(404).send({message: 'not found'})
-    req.body.product[0].deleteOne()
-    .then(response=> res.status(200).send({message:'deleted',response}))
-     .catch(err=>res.status(500).render({err}))
-
- })
+router.delete('/:key/:value',controller.Helper,controller.Remove)
 
 
  function helper (req,res,next){

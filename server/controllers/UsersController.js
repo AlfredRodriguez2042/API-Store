@@ -42,9 +42,12 @@ const Create = async (req, res)=>{
 // Update User
 const Update = async (req, res)=>{
     try {  
-        const user = req.params.id
-        const users = await Users.findByIdAndUpdate(req.params.id, user)
-        res.status(200).send({message: 'UPDATE', users})
+       // const user = req.params.id
+       // const users = await Users.findByIdAndUpdate(req.params.id, user)
+       const user = await Users.findById(req.params.id)
+       const newUser = Object.assign(user, req.body)
+       await newUser.save()
+        res.status(200).send({message: 'UPDATE', newUser})
     } catch (err) {
         res.status(500).send(err)
     }

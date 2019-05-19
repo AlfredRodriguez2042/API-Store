@@ -35,16 +35,35 @@ const Create = async (req, res)=>{
     }
 }
 
-const Update = (req,res)=>{
+const Update = async (req,res)=>{
+    try {
+     if(req.body.err) res.status(500).send({err})
+     if(!req.body.product) res.status(404).send({message: 'not found'})
+     let products = req.body.product[0]
+     products = Object.assign(products, req.body)
+     console.log(products)
+     await products.save()
+     res.status(200).send({message: ' update', products})
+    } catch (err) {
+        res.status(500).send({err})
+    }
 
 }
 
 
-const Remove = (req, res)=>{
+const Remove = async (req, res)=>{
+    try {
+    if(req.body.err) res.status(500).send({err})
+    if(!req.body.product) res.status(404).send({message: 'not found'})
+     const deleted = await req.body.product[0].deleteOne()
+     res.status(200).send({message:'deleted', deleted})
+    } catch (err) {
+        res.status(500).send({err})
+    }
 
 }
 
-
+// helper for search params
 function Helper (req, res, next){
     let query = {}
      query[req.params.key] = req.params.value
