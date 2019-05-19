@@ -1,5 +1,7 @@
 // Model Schema
 const Users = require('../models/Users')
+//validate
+const { validation } = require('./ValidateController')
 
 
 // Get all Users
@@ -30,6 +32,17 @@ const Show = async (req, res)=>{
 
 // Create a User
 const Create = async (req, res)=>{
+    // Validate
+    const { error } = validation(req.body)
+    if(error) res.status(400).send(error.details)
+    // Check email is registerd already or not
+    const userEmail = await Users.findOne({email: req.body.email})
+    if(userEmail) return res.status(400).send({message:'Email is already registerd'})
+    // Check username is teken or not
+    const userName = await Users.findOne({username: req.body.username})
+    if(userName) return res.status(400).send({message:'Username is already registerd'})
+    
+     
     try {
         const user = await new Users(req.body)
         const newUser = await user.save()
@@ -41,6 +54,12 @@ const Create = async (req, res)=>{
 
 // Update User
 const Update = async (req, res)=>{
+    // Check email is registerd already or not
+    const userEmail = await Users.findOne({email: req.body.email})
+    if(userEmail) return res.status(400).send({message:'Email is already registerd'})
+    // Check username is teken or not
+    const userName = await Users.findOne({username: req.body.username})
+    if(userName) return res.status(400).send({message:'Username is already registerd'})
     try {  
        // const user = req.params.id
        // const users = await Users.findByIdAndUpdate(req.params.id, user)
