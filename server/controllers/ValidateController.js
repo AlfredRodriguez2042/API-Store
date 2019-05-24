@@ -13,5 +13,13 @@ const validation = (user)=>{
 
 }
 
+const loginValidator = (user)=>{
+    const schema = {
+        username: Joi.string().alphanum().min(5).max(12).required(),
+        password: Joi.string().required()
+    }
+    return Joi.validate(user, schema)
+}
 
-module.exports = { validation }
+
+module.exports = { validation, loginValidator }

@@ -1,19 +1,21 @@
 const express = require('express')
 import morgan from 'morgan'
 import multer from 'multer'
+import cors from 'cors'
 
 const { storage } = require('./helper/middlewares')
 const app = express()
 const db = require('./database')
 
 // Settings
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 5000)
 
 // Middlewares
 app.use(morgan('dev'))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(multer({storage}).single('image'))
+app.use(cors())
 
 // Routes
 app.use('/product',require('./routes/Product') )

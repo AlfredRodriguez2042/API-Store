@@ -1,0 +1,28 @@
+<form action="/product/add" method="POST" enctype="multipart/form-data">  
+    <input type="text" name="name" placeholder="name"> <br>
+    <input type="text"  name="price" placeholder="price"> <br>
+    <input type="text"  name="category" placeholder="category"> <br>
+    <input type="file" name="image" id="file"><br>
+    <button> Upload</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>title</th>
+            <th>description</th>
+            <th>date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each photos}}
+        <tr>
+            <td>{{title}}</td>
+            <td>{{description}}</td>
+            <td>{{created_at}}</td>
+            <td> <a href="{{imageURL}}" target="_blank">view</a>
+            <td>  <a href="/images/delete/{{_id}}">Delete</a></td> </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

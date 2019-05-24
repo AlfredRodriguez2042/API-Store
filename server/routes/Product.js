@@ -10,7 +10,7 @@ router.get('/', controller.index)
  
 
 // Create
-router.post('/', controller.Create)
+router.post('/add', controller.Create)
 
  //Show Products
 router.get('/:key/:value',controller.Helper,controller.Show)

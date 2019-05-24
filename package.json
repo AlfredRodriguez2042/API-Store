@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=develpment nodemon server/index.js --exec babel-node",
-    "prod": "cross-env NODE_ENV=production node server/index.js" 
+    "prod": "cross-env NODE_ENV=production node server/index.js"
   },
   "keywords": [],
   "author": "Alfredo Rodriguez",
@@ -26,6 +26,7 @@
     "@hapi/joi": "^15.0.3",
     "bcrypt": "^3.0.6",
     "cloudinary": "^1.14.0",
+    "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
     "jsonwebtoken": "^8.5.1",

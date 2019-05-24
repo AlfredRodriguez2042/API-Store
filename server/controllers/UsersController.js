@@ -10,9 +10,9 @@ const Index = async (req, res)=>{
        const users = await Users.find({})
        console.log(users)
        if (users.length) {
-           res.status(200).send({users})
+           res.status(200).json({users})
        } else {
-           res.status(204).send({message: 'NO CONTENT'})
+           res.status(204).json({message: 'NO CONTENT'})
        }
    } catch (err) {
        res.status(500).send(err)
@@ -23,7 +23,7 @@ const Index = async (req, res)=>{
 const Show = async (req, res)=>{
     try {
         const oneUser = await Users.findById(req.params.id)
-        res.status(200).send({oneUser})
+        res.status(200).json({oneUser})
     } catch (err) {
         res.status(500).send(err)
     }
@@ -34,19 +34,30 @@ const Show = async (req, res)=>{
 const Create = async (req, res)=>{
     // Validate
     const { error } = validation(req.body)
-    if(error) res.status(400).send(error.details)
+    if(error) res.status(400).json({
+        status: "error",
+        type: error.details[0].path[0],
+        message: error.details[0].message  })
+
     // Check email is registerd already or not
     const userEmail = await Users.findOne({email: req.body.email})
-    if(userEmail) return res.status(400).send({message:'Email is already registerd'})
+    if(userEmail) return res.status(400).json({
+        status:"error",
+        type:"email",
+        message: "Email is alredy resgister"   })
+
     // Check username is teken or not
     const userName = await Users.findOne({username: req.body.username})
-    if(userName) return res.status(400).send({message:'Username is already registerd'})
+    if(userName) return res.status(400).json({
+        status:"error",
+        type:"email",
+        message:'Username is alredy taken'})
     
-     
+     // create
     try {
         const user = await new Users(req.body)
         const newUser = await user.save()
-        res.status(201).send({newUser})
+        res.status(201).json({newUser})
     } catch (err) {
         res.status(500).send(err)
     }
@@ -54,19 +65,33 @@ const Create = async (req, res)=>{
 
 // Update User
 const Update = async (req, res)=>{
+    // Validate
+    const { error } = validation(req.body)
+    if(error) res.status(400).json({
+        status: "error",
+        type: error.details[0].path[0],
+        message: error.details[0].message  })
+
     // Check email is registerd already or not
     const userEmail = await Users.findOne({email: req.body.email})
-    if(userEmail) return res.status(400).send({message:'Email is already registerd'})
+    if(userEmail) return res.status(400).json({
+        status:"error",
+        type:"email",
+        message: "Email is alredy resgister"   })
+
     // Check username is teken or not
     const userName = await Users.findOne({username: req.body.username})
-    if(userName) return res.status(400).send({message:'Username is already registerd'})
+    if(userName) return res.status(400).json({
+        status:"error",
+        type:"email",
+        message:'Username is alredy taken'})
+
+    // Update    
     try {  
-       // const user = req.params.id
-       // const users = await Users.findByIdAndUpdate(req.params.id, user)
        const user = await Users.findById(req.params.id)
        const newUser = Object.assign(user, req.body)
        await newUser.save()
-        res.status(200).send({message: 'UPDATE', newUser})
+        res.status(200).json({message: 'UPDATE', newUser})
     } catch (err) {
         res.status(500).send(err)
     }
@@ -76,7 +101,7 @@ const Update = async (req, res)=>{
 const Remove = async (req, res)=>{
     try {
         const deleteUser = await Users.findByIdAndRemove(req.params.id)
-        res.status(200).send({message:'deleted', deleteUser})
+        res.status(200).json({message:'deleted', deleteUser})
     } catch (err) {
         res.status(500).send(err)
     }
